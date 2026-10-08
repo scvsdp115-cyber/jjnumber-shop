@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JJNumber選物店 | 日本 & 中國動漫周邊精選代購</title>
+  <style>
+    /* --- 全局樣式設定 --- */
+    :root {
+      --primary-color: #e63946; /* 動漫熱血風主色 */
+      --secondary-color: #ffb703; /* 活力黃 */
+      --dark-color: #1d3557;
+      --light-bg: #f8f9fa;
+      --white: #ffffff;
+      --gray: #6c757d;
+      --border-color: #e0e0e0;
+      --box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    }
+
+    body {
+      background-color: var(--light-bg);
+      color: #333;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* --- 頂部導覽列 --- */
+    header {
+      background-color: var(--white);
+      box-shadow: var(--box-shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      color: var(--dark-color);
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.3s;
+      padding: 0.5rem 0.8rem;
+      border-radius: 4px;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+      color: var(--primary-color);
+      background-color: rgba(230, 57, 70, 0.08);
+    }
+
+    /* --- 跑馬燈區域 --- */
+    .marquee-container {
+      background-color: var(--primary-color);
+      color: var(--white);
+      padding: 0.6rem 0;
+      overflow: hidden;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .marquee-text {
+      display: inline-block;
+      padding-left: 100%;
+      animation: marquee 22s linear infinite;
+      font-weight: 500;
+    }
+
+    @keyframes marquee {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(-100%, 0); }
+    }
+
+    /* --- 容器通用設定 --- */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      width: 100%;
+    }
+
+    /* --- 訪客計數器區塊 --- */
+    .counter-bar {
+      background: var(--white);
+      border-radius: 8px;
+      padding: 0.8rem 1.5rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: var(--box-shadow);
+      font-size: 0.95rem;
+      color: var(--gray);
+    }
+
+    .counter-badge {
+      background: var(--secondary-color);
+      color: var(--dark-color);
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      font-weight: bold;
+    }
+
+    /* --- 廣告圖片輪播 --- */
+    .carousel {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+      height: 380px;
+      margin-bottom: 2.5rem;
+    }
+
+    .carousel-inner {
+      display: flex;
+      width: 300%;
+      height: 100%;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-item {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .carousel-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .carousel-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      color: white;
+      padding: 2rem 1.5rem 1rem 1.5rem;
+    }
+
+    .carousel-caption h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .carousel-controls {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      padding: 0 1rem;
+    }
+
+    .carousel-btn {
+      background: rgba(255,255,255,0.7);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: background 0.3s;
+    }
+
+    .carousel-btn:hover {
+      background: var(--white);
+    }
+
+    .carousel-dots {
+      position: absolute;
+      bottom: 12px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      cursor: pointer;
+    }
+
+    .dot.active {
+      background: var(--white);
+      width: 24px;
+      border-radius: 10px;
+    }
+
+    /* --- 商品展示區塊 --- */
+    .section-title {
+      font-size: 1.6rem;
+      color: var(--dark-color);
+      margin: 2rem 0 1rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-bottom: 3px solid var(--primary-color);
+      padding-bottom: 0.5rem;
+    }
+
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .product-card {
+      background: var(--white);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+
+    .product-img-wrapper {
+      height: 200px;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .product-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s;
+    }
+
+    .product-card:hover .product-img-wrapper img {
+      transform: scale(1.05);
+    }
+
+    .product-tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: var(--primary-color);
+      color: white;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+
+    .product-info {
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .product-category {
+      font-size: 0.8rem;
+      color: var(--gray);
+      margin-bottom: 0.3rem;
+    }
+
+    .product-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--dark-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .product-desc {
+      font-size: 0.85rem;
+      color: var(--gray);
+      margin-bottom: 1rem;
+      flex-grow: 1;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .product-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+    }
+
+    .product-price {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .btn-detail {
+      background-color: var(--dark-color);
+      color: var(--white);
+      text-decoration: none;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      font-size: 0.85rem;
+      transition: background 0.3s;
+    }
+
+    .btn-detail:hover {
+      background-color: var(--primary-color);
+    }
+
+    .loading-spinner {
+      text-align: center;
+      padding: 2rem;
+      color: var(--gray);
+    }
+
+    /* --- 頁尾 --- */
+    footer {
+      background-color: var(--dark-color);
+      color: #bbb;
+      margin-top: auto;
+      padding: 2.5rem 0 1rem 0;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h4 {
+      color: var(--white);
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .footer-section p, .footer-section a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 1.2rem;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    @media (max-width: 768px) {
+      .nav-container { flex-direction: column; gap: 1rem; }
+      .carousel { height: 240px; }
+      .product-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+      .product-img-wrapper { height: 140px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. 頂部導覽列 -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">
+        🎁 JJNumber選物店
+      </a>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="active">首頁</a></li>
+        <li><a href="story.html">店家故事</a></li>
+        <li><a href="product.html">商品頁面</a></li>
+        <li><a href="about.html">AI 生活風格誌</a></li>
+        <li><a href="contact.html">聯絡資訊</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- 2. 跑馬燈廣播 -->
+  <div class="marquee-container">
+    <div class="marquee-text">
+      📢 歡迎光臨「JJNumber選物店」！日本 ACG 動漫熱銷周邊嚴選代購、中國精選動漫周邊限時預購中！下單支援 7-11 賣貨便取貨付款～
+    </div>
+  </div>
+
+  <!-- 主內容區域 -->
+  <main class="container">
+
+    <!-- 3. 訪客計數器 -->
+    <div class="counter-bar">
+      <span>歡迎光臨 JJNumber選物店！感謝廣大漫迷支持</span>
+      <div>
+        累計瀏覽人次：<span id="visit-counter" class="counter-badge">載入中...</span>
+      </div>
+    </div>
+
+    <!-- 4. 廣告圖片輪播 (3張) -->
+    <div class="carousel" id="homeCarousel">
+      <div class="carousel-inner" id="carouselInner">
+        <div class="carousel-item">
+          <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=1200&auto=format&fit=crop" alt="日本動漫周邊">
+          <div class="carousel-caption">
+            <h3>日本動漫熱門周邊代購</h3>
+            <p>正版限定徽章、立牌、公仔現貨與預購！</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=1200&auto=format&fit=crop" alt="中國周邊代購">
+          <div class="carousel-caption">
+            <h3>中國限定周邊精選代購</h3>
+            <p>嚴選優質熱門作品官方授權商品與周邊</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=1200&auto=format&fit=crop" alt="賣貨便便捷下單">
+          <div class="carousel-caption">
+            <h3>賣貨便安全便捷寄送</h3>
+            <p>完成下單資料填寫，自動生成訂單並串接賣貨便！</p>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-controls">
+        <button class="carousel-btn" onclick="moveSlide(-1)">&#10094;</button>
+        <button class="carousel-btn" onclick="moveSlide(1)">&#10095;</button>
+      </div>
+      <div class="carousel-dots">
+        <span class="dot active" onclick="setSlide(0)"></span>
+        <span class="dot" onclick="setSlide(1)"></span>
+        <span class="dot" onclick="setSlide(2)"></span>
+      </div>
+    </div>
+
+    <!-- 5. 動態商品展示區域 -->
+    
+    <!-- 熱銷商品區 -->
+    <h2 class="section-title">🔥 熱銷商品</h2>
+    <div class="product-grid" id="hot-products">
+      <div class="loading-spinner">載入商品中...</div>
+    </div>
+
+    <!-- 老闆推薦區 -->
+    <h2 class="section-title">⭐ 老闆推薦</h2>
+    <div class="product-grid" id="recommended-products">
+      <div class="loading-spinner">載入商品中...</div>
+    </div>
+
+    <!-- 新品上市區 -->
+    <h2 class="section-title">✨ 新品上市</h2>
+    <div class="product-grid" id="new-products">
+      <div class="loading-spinner">載入商品中...</div>
+    </div>
+
+  </main>
+
+  <!-- 6. 頁尾與版權聲明 -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>JJNumber選物店</h4>
+        <p>提供日本動漫相關周邊好物嚴選代購及銷售，以及少量中國周邊代購。</p>
+      </div>
+      <div class="footer-section">
+        <h4>服務項目</h4>
+        <p>• 日本動漫周邊代購 / 現貨<br>• 中國動漫周邊精選代購<br>• 7-11 賣貨便取貨付款</p>
+      </div>
+      <div class="footer-section">
+        <h4>快速連結</h4>
+        <p><a href="product.html">前往選購商品</a> | <a href="contact.html">聯絡我們</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>JJNumber選物店 版權所有 © 2026 All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <!-- 7. JavaScript 邏輯處理 -->
+  <script>
+    /* 訪客計數器 */
+    function initCounter() {
+      let count = localStorage.getItem('jjnumber_visit_count') || 108;
+      count = parseInt(count) + 1;
+      localStorage.setItem('jjnumber_visit_count', count);
+      document.getElementById('visit-counter').innerText = count.toLocaleString() + ' 人次';
+    }
+
+    /* 輪播圖邏輯 */
+    let currentSlide = 0;
+    const totalSlides = 3;
+    let autoSlideInterval;
+
+    function showSlide(index) {
+      if (index >= totalSlides) currentSlide = 0;
+      else if (index < 0) currentSlide = totalSlides - 1;
+      else currentSlide = index;
+
+      const inner = document.getElementById('carouselInner');
+      inner.style.transform = `translateX(-${currentSlide * (100 / totalSlides)}%)`;
+
+      const dots = document.querySelectorAll('.dot');
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === currentSlide);
+      });
+    }
+
+    function moveSlide(step) {
+      showSlide(currentSlide + step);
+      resetAutoSlide();
+    }
+
+    function setSlide(index) {
+      showSlide(index);
+      resetAutoSlide();
+    }
+
+    function startAutoSlide() {
+      autoSlideInterval = setInterval(() => {
+        showSlide(currentSlide + 1);
+      }, 4000);
+    }
+
+    function resetAutoSlide() {
+      clearInterval(autoSlideInterval);
+      startAutoSlide();
+    }
+
+    /* Google Apps Script 資料串接 */
+    // 請將下方的網址替換成您部署獲得的 GAS Web App 網址：
+    const GAS_WEB_APP_URL = "YOUR_GAS_WEB_APP_URL_HERE";
+
+    // 示範動漫商品資料（當尚未連結 GAS 時預設顯示）
+    const sampleProducts = [
+      { id: "P001", category: "日本動漫", name: "角色正版壓克力立牌", price: 420, img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop", desc: "高透明度壓克力材質，附專屬底座與場景背景組", recommend: "熱銷商品", status: "上架" },
+      { id: "P002", category: "中國代購", name: "官方限定彩箔紀念色紙", price: 250, img: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=500&auto=format&fit=crop", desc: "精美燙金包邊與彩箔視覺效果，附保護套", recommend: "老闆推薦", status: "上架" },
+      { id: "P003", category: "日本動漫", name: "熱門動漫角色精細手辦公仔", price: 1350, img: "https://images.unsplash.com/photo-1563089145-599997674d42?w=500&auto=format&fit=crop", desc: "高精細塗裝模型，塗裝完整並附限定替換臉型", recommend: "新品上市", status: "上架" },
+      { id: "P004", category: "日本動漫", name: "限定金屬雙針徽章組 (3入)", price: 380, img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=500&auto=format&fit=crop", desc: "日本限定會場發售，收藏質感極佳", recommend: "熱銷商品", status: "上架" },
+      { id: "P005", category: "中國代購", name: "官方聯名周邊棉花娃娃/絨毛公仔", price: 680, img: "https://images.unsplash.com/photo-1558679908-541bcf1249ff?w=500&auto=format&fit=crop", desc: "20cm 可換裝棉花娃娃，觸感軟綿可愛", recommend: "老闆推薦", status: "上架" },
+      { id: "P006", category: "日本動漫", name: "官方精裝設定集 & 紀念畫冊", price: 890, img: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&auto=format&fit=crop", desc: "收錄未公開草稿、角色設定圖與全彩插畫", recommend: "新品上市", status: "上架" }
+    ];
+
+    async function loadProducts() {
+      let products = [];
+
+      if (GAS_WEB_APP_URL && GAS_WEB_APP_URL !== "https://script.google.com/macros/s/AKfycbztnd5sk-TNOP3d2952BmU9sB-CgACsd9aUZwlTTbAk9Hr7dI9WHLJBJPrJ4QdFyTXf0g/exec") {
+        try {
+          const res = await fetch(GAS_WEB_APP_URL);
+          products = await res.json();
+        } catch (err) {
+          console.warn("GAS 載入失敗，使用預設動漫範例資料:", err);
+          products = sampleProducts;
+        }
+      } else {
+        products = sampleProducts;
+      }
+
+      const activeProducts = products.filter(p => p.status === '上架');
+
+      renderGrid('hot-products', activeProducts.filter(p => p.recommend === '熱銷商品'));
+      renderGrid('recommended-products', activeProducts.filter(p => p.recommend === '老闆推薦'));
+      renderGrid('new-products', activeProducts.filter(p => p.recommend === '新品上市'));
+    }
+
+    function renderGrid(containerId, items) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      if (items.length === 0) {
+        container.innerHTML = '<p style="color:#888; grid-column:1/-1;">目前暫無此類商品</p>';
+        return;
+      }
+
+      container.innerHTML = items.map(item => `
+        <div class="product-card">
+          <div class="product-img-wrapper">
+            <img src="${item.img || 'https://via.placeholder.com/300'}" alt="${item.name}">
+            <span class="product-tag">${item.recommend || '精選'}</span>
+          </div>
+          <div class="product-info">
+            <span class="product-category">${item.category || '周邊商品'}</span>
+            <h3 class="product-title">${item.name}</h3>
+            <p class="product-desc">${item.desc || '暫無商品介紹'}</p>
+            <div class="product-footer">
+              <span class="product-price">NT$ ${item.price}</span>
+              <a href="product.html" class="btn-detail">查看詳情</a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initCounter();
+      startAutoSlide();
+      loadProducts();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JJNumber選物店 | 商品列表與線上訂購</title>
+  <style>
+    :root {
+      --primary-color: #e63946;
+      --secondary-color: #ffb703;
+      --dark-color: #1d3557;
+      --light-bg: #f8f9fa;
+      --white: #ffffff;
+      --gray: #6c757d;
+      --border-color: #e0e0e0;
+      --box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    }
+
+    body {
+      background-color: var(--light-bg);
+      color: #333;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* 頂部導覽列 */
+    header {
+      background-color: var(--white);
+      box-shadow: var(--box-shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      color: var(--dark-color);
+      font-weight: 600;
+      padding: 0.5rem 0.8rem;
+      border-radius: 4px;
+    }
+
+    .nav-menu a:hover, .nav-menu a.active {
+      color: var(--primary-color);
+      background-color: rgba(230, 57, 70, 0.08);
+    }
+
+    .cart-btn-nav {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      width: 100%;
+    }
+
+    /* 工具列：搜尋與分類 */
+    .filter-bar {
+      background: var(--white);
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: var(--box-shadow);
+      margin-bottom: 2rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .search-box {
+      display: flex;
+      gap: 0.5rem;
+      flex: 1;
+      min-width: 280px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 0.6rem 1rem;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      outline: none;
+    }
+
+    .category-buttons {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .cat-btn {
+      background: #e9ecef;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .cat-btn.active, .cat-btn:hover {
+      background: var(--dark-color);
+      color: white;
+    }
+
+    /* 商品列表 Grid */
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .product-card {
+      background: var(--white);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .product-img {
+      height: 200px;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .product-body {
+      padding: 1.2rem;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .product-category {
+      font-size: 0.8rem;
+      color: var(--gray);
+    }
+
+    .product-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      color: var(--dark-color);
+      margin: 0.3rem 0;
+    }
+
+    .product-desc {
+      font-size: 0.85rem;
+      color: var(--gray);
+      margin-bottom: 1rem;
+      flex-grow: 1;
+    }
+
+    .product-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .product-price {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    .add-cart-btn {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0.5rem 0.9rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    .add-cart-btn:hover {
+      background: #c1272d;
+    }
+
+    /* 分頁元件 */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 2rem 0;
+    }
+
+    .page-btn {
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border-color);
+      background: var(--white);
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .page-btn.active {
+      background: var(--dark-color);
+      color: white;
+    }
+
+    /* 購物車 Modal / 彈窗 */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    .modal-content {
+      background: white;
+      border-radius: 12px;
+      max-width: 700px;
+      width: 100%;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .modal-header {
+      padding: 1.2rem 1.5rem;
+      background: var(--dark-color);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .modal-body {
+      padding: 1.5rem;
+      overflow-y: auto;
+      flex-grow: 1;
+    }
+
+    /* 橫向條列式購物車項目 */
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 0.8rem 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .cart-item img {
+      width: 70px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .cart-item-info {
+      flex-grow: 1;
+    }
+
+    .cart-item-title {
+      font-weight: bold;
+      color: var(--dark-color);
+    }
+
+    .cart-item-price {
+      color: var(--primary-color);
+      font-size: 0.95rem;
+    }
+
+    .cart-qty-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .qty-btn {
+      width: 26px;
+      height: 26px;
+      border: 1px solid var(--border-color);
+      background: #f1f1f1;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .cart-total-bar {
+      margin-top: 1.5rem;
+      text-align: right;
+      font-size: 1.3rem;
+      font-weight: bold;
+      color: var(--primary-color);
+    }
+
+    /* 結帳表單 */
+    .checkout-form {
+      display: none;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    .form-group label {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .form-group input {
+      padding: 0.6rem;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+    }
+
+    .modal-footer {
+      padding: 1rem 1.5rem;
+      background: #f8f9fa;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .btn-submit {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      padding: 0.7rem 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    /* 頁尾 */
+    footer {
+      background-color: var(--dark-color);
+      color: #bbb;
+      margin-top: auto;
+      padding: 2.5rem 0 1rem 0;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 1rem;
+      font-size: 0.85rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 導覽列 -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">🎁 JJNumber選物店</a>
+      <ul class="nav-menu">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="story.html">店家故事</a></li>
+        <li><a href="product.html" class="active">商品頁面</a></li>
+        <li><a href="about.html">AI 生活風格誌</a></li>
+        <li><a href="contact.html">聯絡資訊</a></li>
+        <li>
+          <button class="cart-btn-nav" onclick="openCartModal()">
+            🛒 購物車 (<span id="cart-count">0</span>)
+          </button>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- 主內容 -->
+  <main class="container">
+    <h2 style="margin-bottom: 1.5rem; color: var(--dark-color);">🛒 所有周邊商品</h2>
+
+    <!-- 搜尋與分類選單 -->
+    <div class="filter-bar">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="輸入關鍵字搜尋商品..." oninput="handleSearch()">
+      </div>
+      <div class="category-buttons" id="categoryContainer">
+        <button class="cat-btn active" onclick="filterCategory('全部')">全部商品</button>
+      </div>
+    </div>
+
+    <!-- 商品列表展示區 -->
+    <div class="product-grid" id="productGrid">
+      <p style="grid-column: 1/-1; text-align: center; color: #888;">載入商品資料中...</p>
+    </div>
+
+    <!-- 分頁導覽 -->
+    <div class="pagination" id="pagination"></div>
+  </main>
+
+  <!-- 購物車與結帳 Modal -->
+  <div class="modal-overlay" id="cartModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalTitle">🛒 購物車清單</h3>
+        <button class="close-btn" onclick="closeCartModal()">&times;</button>
+      </div>
+      
+      <div class="modal-body">
+        <!-- 步驟 1: 橫向條列式商品清單 -->
+        <div id="cartStep1">
+          <div id="cartItemsList"></div>
+          <div class="cart-total-bar">
+            全部商品總金額：NT$ <span id="cartTotal">0</span>
+          </div>
+        </div>
+
+        <!-- 步驟 2: 賣貨便收件人資訊 -->
+        <div id="cartStep2" class="checkout-form">
+          <h4 style="color: var(--dark-color); margin-bottom: 0.5rem;">📦 請填寫賣貨便取貨資料</h4>
+          <div class="form-group">
+            <label>訂購人姓名 *</label>
+            <input type="text" id="custName" placeholder="請輸入真實姓名" required>
+          </div>
+          <div class="form-group">
+            <label>聯絡電話 *</label>
+            <input type="tel" id="custPhone" placeholder="0912345678" required>
+          </div>
+          <div class="form-group">
+            <label>電子信箱 Email *</label>
+            <input type="email" id="custEmail" placeholder="example@email.com" required>
+          </div>
+          <div class="form-group">
+            <label>7-11 賣貨便取貨門市名稱 / 門市店號 *</label>
+            <input type="text" id="custStore" placeholder="例如: 鑫三重大門市 / 123456" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="cat-btn" id="btnBack" onclick="prevStep()" style="display: none;">返回修改購物車</button>
+        <div></div>
+        <button class="btn-submit" id="btnNext" onclick="nextStep()">前往結帳頁面</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 頁尾與版權聲明 -->
+  <footer>
+    <div class="footer-bottom">
+      <p>JJNumber選物店 版權所有 © 2026 All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // 請填入您的 GAS Web App 網址
+    const GAS_WEB_APP_URL = "YOUR_GAS_WEB_APP_URL_HERE";
+
+    let allProducts = [];
+    let filteredProducts = [];
+    let cart = [];
+    let currentCategory = '全部';
+    let currentPage = 1;
+    const itemsPerPage = 10;
+    let currentStep = 1;
+
+    // 備用動漫周邊範例資料
+    const sampleData = [
+      { id: "P001", category: "日本動漫", name: "角色正版壓克力立牌", price: 420, img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500&auto=format&fit=crop", desc: "高透明度壓克力材質，附專屬底座", status: "上架" },
+      { id: "P002", category: "中國代購", name: "官方限定彩箔紀念色紙", price: 250, img: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=500&auto=format&fit=crop", desc: "精美燙金包邊與彩箔視覺效果", status: "上架" },
+      { id: "P003", category: "日本動漫", name: "熱門動漫角色精細手辦公仔", price: 1350, img: "https://images.unsplash.com/photo-1563089145-599997674d42?w=500&auto=format&fit=crop", desc: "高精細塗裝模型，附替換臉型", status: "上架" },
+      { id: "P004", category: "日本動漫", name: "限定金屬雙針徽章組 (3入)", price: 380, img: "https://images.unsplash.com/photo-1578632767115-351597cf2477?w=500&auto=format&fit=crop", desc: "日本限定會場發售，收藏質感極佳", status: "上架" },
+      { id: "P005", category: "中國代購", name: "聯名周邊棉花娃娃/絨毛公仔", price: 680, img: "https://images.unsplash.com/photo-1558679908-541bcf1249ff?w=500&auto=format&fit=crop", desc: "20cm 可換裝棉花娃娃", status: "上架" },
+      { id: "P006", category: "日本動漫", name: "官方精裝設定集 & 紀念畫冊", price: 890, img: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=500&auto=format&fit=crop", desc: "全彩插畫與角色設計圖", status: "上架" }
+    ];
+
+    // 初始化與讀取資料
+    async function init() {
+      try {
+        if (GAS_WEB_APP_URL && GAS_WEB_APP_URL !== "YOUR_GAS_WEB_APP_URL_HERE") {
+          const res = await fetch(GAS_WEB_APP_URL);
+          allProducts = await res.json();
+        } else {
+          allProducts = sampleData;
+        }
+      } catch (err) {
+        console.warn("使用預設資料:", err);
+        allProducts = sampleData;
+      }
+
+      // 過濾上架商品
+      allProducts = allProducts.filter(p => p.status === '上架');
+      setupCategories();
+      applyFilters();
+    }
+
+    // 動態建置分類按鈕
+    function setupCategories() {
+      const categories = ['全部', ...new Set(allProducts.map(p => p.category))];
+      const container = document.getElementById('categoryContainer');
+      container.innerHTML = categories.map(cat => 
+        `<button class="cat-btn ${cat === currentCategory ? 'active' : ''}" onclick="filterCategory('${cat}')">${cat}</button>`
+      ).join('');
+    }
+
+    function filterCategory(cat) {
+      currentCategory = cat;
+      currentPage = 1;
+      setupCategories();
+      applyFilters();
+    }
+
+    function handleSearch() {
+      currentPage = 1;
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const query = document.getElementById('searchInput').value.trim().toLowerCase();
+      filteredProducts = allProducts.filter(p => {
+        const matchCat = (currentCategory === '全部' || p.category === currentCategory);
+        const matchSearch = p.name.toLowerCase().includes(query) || (p.desc && p.desc.toLowerCase().includes(query));
+        return matchCat && matchSearch;
+      });
+      renderProducts();
+      renderPagination();
+    }
+
+    // 渲染商品列表 (每頁最多 10 樣)
+    function renderProducts() {
+      const grid = document.getElementById('productGrid');
+      if (filteredProducts.length === 0) {
+        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #888;">找不到符合條件的商品。</p>';
+        return;
+      }
+
+      const start = (currentPage - 1) * itemsPerPage;
+      const end = start + itemsPerPage;
+      const pageItems = filteredProducts.slice(start, end);
+
+      grid.innerHTML = pageItems.map(p => `
+        <div class="product-card">
+          <img src="${p.img || 'https://via.placeholder.com/300'}" class="product-img" alt="${p.name}">
+          <div class="product-body">
+            <span class="product-category">${p.category}</span>
+            <h3 class="product-title">${p.name}</h3>
+            <p class="product-desc">${p.desc || ''}</p>
+            <div class="product-footer">
+              <span class="product-price">NT$ ${p.price}</span>
+              <button class="add-cart-btn" onclick="addToCart('${p.id}')">+ 加入購物車</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 渲染分頁按鈕
+    function renderPagination() {
+      const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+      const container = document.getElementById('pagination');
+      if (totalPages <= 1) {
+        container.innerHTML = '';
+        return;
+      }
+
+      let html = '';
+      for (let i = 1; i <= totalPages; i++) {
+        html += `<button class="page-btn ${i === currentPage ? 'active' : ''}" onclick="goToPage(${i})">${i}</button>`;
+      }
+      container.innerHTML = html;
+    }
+
+    function goToPage(page) {
+      currentPage = page;
+      renderProducts();
+      renderPagination();
+    }
+
+    // 購物車邏輯
+    function addToCart(productId) {
+      const product = allProducts.find(p => p.id === productId);
+      if (!product) return;
+
+      const existing = cart.find(item => item.id === productId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ ...product, qty: 1 });
+      }
+      updateCartUI();
+      alert(`已將「${product.name}」加入購物車！`);
+    }
+
+    function updateCartUI() {
+      const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById('cart-count').innerText = totalQty;
+    }
+
+    function openCartModal() {
+      currentStep = 1;
+      showStepUI();
+      renderCartItems();
+      document.getElementById('cartModal').style.display = 'flex';
+    }
+
+    function closeCartModal() {
+      document.getElementById('cartModal').style.display = 'none';
+    }
+
+    // 橫向條列式呈現購物車項目
+    function renderCartItems() {
+      const list = document.getElementById('cartItemsList');
+      if (cart.length === 0) {
+        list.innerHTML = '<p style="text-align:center; color:#888; padding: 2rem 0;">購物車目前是空的。</p>';
+        document.getElementById('cartTotal').innerText = '0';
+        return;
+      }
+
+      let total = 0;
+      list.innerHTML = cart.map(item => {
+        const itemTotal = item.price * item.qty;
+        total += itemTotal;
+        return `
+          <div class="cart-item">
+            <img src="${item.img || 'https://via.placeholder.com/100'}" alt="${item.name}">
+            <div class="cart-item-info">
+              <div class="cart-item-title">${item.name}</div>
+              <div class="cart-item-price">NT$ ${item.price}</div>
+            </div>
+            <div class="cart-qty-controls">
+              <button class="qty-btn" onclick="changeQty('${item.id}', -1)">-</button>
+              <span>${item.qty}</span>
+              <button class="qty-btn" onclick="changeQty('${item.id}', 1)">+</button>
+            </div>
+            <div style="font-weight:bold; min-width:80px; text-align:right;">
+              NT$ ${itemTotal}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('cartTotal').innerText = total;
+    }
+
+    function changeQty(id, delta) {
+      const item = cart.find(i => i.id === id);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) {
+        cart = cart.filter(i => i.id !== id);
+      }
+      updateCartUI();
+      renderCartItems();
+    }
+
+    function showStepUI() {
+      if (currentStep === 1) {
+        document.getElementById('cartStep1').style.display = 'block';
+        document.getElementById('cartStep2').style.display = 'none';
+        document.getElementById('btnBack').style.display = 'none';
+        document.getElementById('btnNext').innerText = '確認並前往下一步填寫資料';
+        document.getElementById('modalTitle').innerText = '🛒 購物車清單';
+      } else {
+        document.getElementById('cartStep1').style.display = 'none';
+        document.getElementById('cartStep2').style.display = 'flex';
+        document.getElementById('btnBack').style.display = 'inline-block';
+        document.getElementById('btnNext').innerText = '確認送出訂單';
+        document.getElementById('modalTitle').innerText = '📦 填寫賣貨便取貨資訊';
+      }
+    }
+
+    function nextStep() {
+      if (cart.length === 0) {
+        alert('購物車沒有商品，無法結帳！');
+        return;
+      }
+
+      if (currentStep === 1) {
+        currentStep = 2;
+        showStepUI();
+      } else {
+        submitOrder();
+      }
+    }
+
+    function prevStep() {
+      currentStep = 1;
+      showStepUI();
+    }
+
+    // 送出訂單至 GAS 並回傳訂單編號（已修正 CORS 跨域設定）
+    async function submitOrder() {
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const email = document.getElementById('custEmail').value.trim();
+      const store = document.getElementById('custStore').value.trim();
+
+      if (!name || !phone || !email || !store) {
+        alert('請完整填寫所有收件資訊！');
+        return;
+      }
+
+      const orderData = {
+        customer: { name, phone, email, store },
+        cart: cart,
+        totalAmount: cart.reduce((sum, i) => sum + (i.price * i.qty), 0)
+      };
+
+      document.getElementById('btnNext').innerText = '訂單處理中...';
+      document.getElementById('btnNext').disabled = true;
+
+      try {
+        const response = await fetch(GAS_WEB_APP_URL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'text/plain;charset=utf-8' // 避免觸發瀏覽器 CORS OPTIONS 預檢阻擋
+          },
+          body: JSON.stringify(orderData)
+        });
+        const result = await response.json();
+
+        if (result.success) {
+          alert(`🎉 訂單建立成功！\n您的訂單編號為：${result.orderId}\n系統將為您跳轉至賣貨便完成最後結帳與寄送手續！`);
+          cart = [];
+          updateCartUI();
+          closeCartModal();
+          window.location.href = "https://myship.7-11.com.tw/";
+        } else {
+          alert('訂單建立失敗：' + result.error);
+        }
+      } catch (err) {
+        console.error(err);
+        alert('連線失敗，請檢查網路或 GAS 部署設定！');
+      } finally {
+        document.getElementById('btnNext').innerText = '確認送出訂單';
+        document.getElementById('btnNext').disabled = false;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

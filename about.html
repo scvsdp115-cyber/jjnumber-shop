@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JJNumber選物店 | AI 生活風格誌</title>
+  <style>
+    :root {
+      --primary-color: #e63946;
+      --secondary-color: #ffb703;
+      --dark-color: #1d3557;
+      --light-bg: #f8f9fa;
+      --white: #ffffff;
+      --gray: #6c757d;
+      --border-color: #e0e0e0;
+      --box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang TC', 'Microsoft JhengHei', sans-serif; }
+    body { background-color: var(--light-bg); color: #333; line-height: 1.7; display: flex; flex-direction: column; min-height: 100vh; }
+
+    /* 頂部導覽列 */
+    header { background-color: var(--white); box-shadow: var(--box-shadow); position: sticky; top: 0; z-index: 1000; }
+    .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; }
+    .logo { font-size: 1.8rem; font-weight: bold; color: var(--primary-color); text-decoration: none; }
+    .nav-menu { display: flex; list-style: none; gap: 1.5rem; }
+    .nav-menu a { text-decoration: none; color: var(--dark-color); font-weight: 600; padding: 0.5rem 0.8rem; border-radius: 4px; }
+    .nav-menu a:hover, .nav-menu a.active { color: var(--primary-color); background-color: rgba(230, 57, 70, 0.08); }
+
+    /* Banner */
+    .hero-banner { background: linear-gradient(135deg, #2a4d69, var(--dark-color)); color: white; padding: 3.5rem 2rem; text-align: center; }
+    .hero-banner h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+    .hero-banner p { font-size: 1rem; opacity: 0.9; }
+
+    /* 文章列表 */
+    .container { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; width: 100%; }
+    .articles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 3rem; }
+    .article-card { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: var(--box-shadow); transition: transform 0.3s; }
+    .article-card:hover { transform: translateY(-5px); }
+    .article-img { width: 100%; height: 200px; object-fit: cover; }
+    .article-content { padding: 1.5rem; }
+    .article-tag { background: rgba(230, 57, 70, 0.1); color: var(--primary-color); padding: 0.2rem 0.6rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold; }
+    .article-title { font-size: 1.25rem; color: var(--dark-color); margin: 0.8rem 0 0.5rem 0; font-weight: bold; }
+    .article-desc { font-size: 0.9rem; color: var(--gray); margin-bottom: 1rem; }
+    .article-date { font-size: 0.8rem; color: #999; }
+
+    /* 特色文章焦點 */
+    .featured-article { background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: var(--box-shadow); display: grid; grid-template-columns: 1fr 1fr; margin-bottom: 3rem; }
+    .featured-img { width: 100%; height: 100%; min-height: 300px; object-fit: cover; }
+    .featured-content { padding: 2.5rem; display: flex; flex-direction: column; justify-content: center; }
+
+    footer { background-color: var(--dark-color); color: #bbb; margin-top: auto; padding: 2rem 0 1rem 0; text-align: center; font-size: 0.85rem; }
+
+    @media (max-width: 768px) {
+      .nav-container { flex-direction: column; gap: 1rem; }
+      .featured-article { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 導覽列 -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">🎁 JJNumber選物店</a>
+      <ul class="nav-menu">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="story.html">店家故事</a></li>
+        <li><a href="product.html">商品頁面</a></li>
+        <li><a href="about.html" class="active">AI 生活風格誌</a></li>
+        <li><a href="contact.html">聯絡資訊</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Banner -->
+  <section class="hero-banner">
+    <h1>✨ AI 生活風格誌</h1>
+    <p>探索動漫周邊融入生活的質感提案，打造專屬於你的 ACG 獨特日常風格</p>
+  </section>
+
+  <main class="container">
+    
+    <!-- 主打特輯 -->
+    <div class="featured-article">
+      <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&auto=format&fit=crop" class="featured-img" alt="桌上擺設特輯">
+      <div class="featured-content">
+        <span class="article-tag">AI 靈感特輯</span>
+        <h2 class="article-title">給上班族的辦公桌 ACG 療癒佈置提案</h2>
+        <p class="article-desc">忙碌的日常裡，如何將喜愛的角色壓克力立牌與質感文具結合？精選 3 款日本正版立牌高透明美學，打造既低調又充滿心靈療癒感的個人專屬空間。</p>
+        <span class="article-date">📅 2026 年 10 月號 | JJNumber AI 編輯部</span>
+      </div>
+    </div>
+
+    <!-- 文章列表 -->
+    <h3 style="color: var(--dark-color); margin-bottom: 1.5rem;">📖 熱門文章誌</h3>
+    <div class="articles-grid">
+      <div class="article-card">
+        <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=500&auto=format&fit=crop" class="article-img" alt="日本周邊保存攻略">
+        <div class="article-content">
+          <span class="article-tag">收藏與保養</span>
+          <h4 class="article-title">徽章與色紙防潮保存完整全攻略</h4>
+          <p class="article-desc">台灣潮濕氣候是周邊收藏大敵！介紹日本動漫迷最推薦的保護套與抗 UV 收藏盒防範技巧。</p>
+          <span class="article-date">2026-09-28</span>
+        </div>
+      </div>
+
+      <div class="article-card">
+        <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=500&auto=format&fit=crop" class="article-img" alt="中國周邊開箱">
+        <div class="article-content">
+          <span class="article-tag">代購開箱</span>
+          <h4 class="article-title">中國熱門燙金彩箔色紙實體視覺開箱</h4>
+          <p class="article-desc">細緻的雷射燙金包邊與層次豐富的彩箔工藝，開箱近距離呈現官方授權紀念色紙的獨特質感。</p>
+          <span class="article-date">2026-09-15</span>
+        </div>
+      </div>
+
+      <div class="article-card">
+        <img src="https://images.unsplash.com/photo-1563089145-599997674d42?w=500&auto=format&fit=crop" class="article-img" alt="擺設展示提案">
+        <div class="article-content">
+          <span class="article-tag">展示設計</span>
+          <h4 class="article-title">用微光氣氛燈打造手辦模型的專屬展示櫃</h4>
+          <p class="article-desc">介紹如何挑選溫和的色溫 LED 燈帶，完美還原精細塗裝手辦模型的動態光影細節。</p>
+          <span class="article-date">2026-09-02</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 頁尾與版權聲明 -->
+  <footer>
+    <p>JJNumber選物店 版權所有 © 2026 All Rights Reserved.</p>
+  </footer>
+
+</body>
+</html>

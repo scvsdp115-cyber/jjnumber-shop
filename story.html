@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JJNumber選物店 | 店家故事與經營理念</title>
+  <style>
+    /* --- 全局樣式設定 (與 index / product 保持一致) --- */
+    :root {
+      --primary-color: #e63946;
+      --secondary-color: #ffb703;
+      --dark-color: #1d3557;
+      --light-bg: #f8f9fa;
+      --white: #ffffff;
+      --gray: #6c757d;
+      --border-color: #e0e0e0;
+      --box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang TC', 'Microsoft JhengHei', sans-serif;
+    }
+
+    body {
+      background-color: var(--light-bg);
+      color: #333;
+      line-height: 1.7;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* 頂部導覽列 */
+    header {
+      background-color: var(--white);
+      box-shadow: var(--box-shadow);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    .nav-menu a {
+      text-decoration: none;
+      color: var(--dark-color);
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.5rem 0.8rem;
+      border-radius: 4px;
+      transition: color 0.3s;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a.active {
+      color: var(--primary-color);
+      background-color: rgba(230, 57, 70, 0.08);
+    }
+
+    /* 頁面 Hero 主視覺區 */
+    .hero-banner {
+      background: linear-gradient(135deg, var(--dark-color), #2a4d69);
+      color: white;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+
+    .hero-banner h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-banner p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    /* 內容容器 */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      width: 100%;
+    }
+
+    /* 故事區塊 */
+    .story-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+      margin-bottom: 4rem;
+    }
+
+    .story-section.reverse {
+      direction: rtl;
+    }
+
+    .story-section.reverse .story-text {
+      direction: ltr;
+    }
+
+    .story-img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+      border-radius: 12px;
+      box-shadow: var(--box-shadow);
+    }
+
+    .story-text h2 {
+      font-size: 1.8rem;
+      color: var(--dark-color);
+      margin-bottom: 1rem;
+      position: relative;
+      padding-bottom: 0.5rem;
+    }
+
+    .story-text h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background-color: var(--primary-color);
+    }
+
+    .story-text p {
+      margin-bottom: 1rem;
+      color: #555;
+      font-size: 1rem;
+    }
+
+    /* 四大經營特色卡片 */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1.5rem;
+      margin: 3rem 0;
+    }
+
+    .feature-card {
+      background: var(--white);
+      padding: 2rem 1.5rem;
+      border-radius: 10px;
+      box-shadow: var(--box-shadow);
+      text-align: center;
+      border-top: 4px solid var(--primary-color);
+    }
+
+    .feature-icon {
+      font-size: 2.5rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .feature-title {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: var(--dark-color);
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-desc {
+      font-size: 0.9rem;
+      color: var(--gray);
+    }
+
+    /* 工作室與選物照片展示牆 */
+    .gallery-title {
+      text-align: center;
+      font-size: 2rem;
+      color: var(--dark-color);
+      margin-bottom: 1.5rem;
+    }
+
+    .photo-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 3rem;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: var(--box-shadow);
+      height: 220px;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.08);
+    }
+
+    .gallery-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(29, 53, 87, 0.85);
+      color: white;
+      padding: 0.6rem 1rem;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    /* 頁尾 */
+    footer {
+      background-color: var(--dark-color);
+      color: #bbb;
+      margin-top: auto;
+      padding: 2.5rem 0 1rem 0;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-section h4 {
+      color: var(--white);
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+    }
+
+    .footer-section p, .footer-section a {
+      color: #aaa;
+      text-decoration: none;
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 1.2rem;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    /* 響應式微調 */
+    @media (max-width: 768px) {
+      .nav-container { flex-direction: column; gap: 1rem; }
+      .story-section, .story-section.reverse { grid-template-columns: 1fr; direction: ltr; }
+      .story-img { height: 240px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. 頂部導覽列 -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">🎁 JJNumber選物店</a>
+      <ul class="nav-menu">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="story.html" class="active">店家故事</a></li>
+        <li><a href="product.html">商品頁面</a></li>
+        <li><a href="about.html">AI 生活風格誌</a></li>
+        <li><a href="contact.html">聯絡資訊</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- 2. Hero 主視覺 -->
+  <section class="hero-banner">
+    <h1>關於 JJNumber選物店</h1>
+    <p>連結熱愛 ACG 的你與世界，嚴選日本與中國熱門正版動漫周邊好物</p>
+  </section>
+
+  <!-- 3. 主內容區域 -->
+  <main class="container">
+
+    <!-- 品牌故事第一區 -->
+    <div class="story-section">
+      <img src="https://images.unsplash.com/photo-1578632767115-351597cf2477?w=800&auto=format&fit=crop" class="story-img" alt="日本動漫選物展示">
+      <div class="story-text">
+        <h2>因為熱愛，所以嚴選</h2>
+        <p><strong>JJNumber選物店</strong> 成立於對動漫文化的極致熱情。我們深知每位同好在開箱喜歡角色的徽章、立牌或手辦時，那份發自內心的喜悅與期待。</p>
+        <p>我們主要專注於<strong>日本動漫周邊好物嚴選代購與現貨銷售</strong>，包含日本安利美特 (Animate)、Jump Shop、秋葉原展覽等第一手限定商品；同時也提供少量<strong>中國官方熱門授權周邊代購</strong>，滿足同好多元的收藏需求。</p>
+      </div>
+    </div>
+
+    <!-- 四大經營理念卡片 -->
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🎌</div>
+        <div class="feature-title">日本正版代購</div>
+        <div class="feature-desc">第一手掌握日本動漫展覽與官方商店限定商品。</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🇨🇳</div>
+        <div class="feature-title">中國精選周邊</div>
+        <div class="feature-desc">嚴選官方正版授權周邊、精美色紙與棉花娃娃。</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📦</div>
+        <div class="feature-title">嚴謹保護包裝</div>
+        <div class="feature-desc">使用高厚度防撞氣泡紙與紙箱，護送每件珍貴收藏。</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🏪</div>
+        <div class="feature-title">賣貨便便利寄送</div>
+        <div class="feature-desc">串接 7-11 賣貨便取貨付款，購買安全無後顧之憂。</div>
+      </div>
+    </div>
+
+    <!-- 品牌故事第二區 -->
+    <div class="story-section reverse">
+      <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=800&auto=format&fit=crop" class="story-img" alt="防撞防護包裝流程">
+      <div class="story-text">
+        <h2>從下單到送達，全程細心護送</h2>
+        <p>對於動漫周邊商品的運送保護，JJNumber選物店有著近乎苛求的堅持。無論是容易折損的紙類色紙、壓克力立牌，還是細緻的模型手辦，我們皆會採用嚴密包裝防護。</p>
+        <p>顧客在網站下單後，系統會自動匯入資料至 <strong>7-11 賣貨便系統</strong> 並生成專屬訂單編號，方便您隨時追蹤包裹進度，享受安心有保障的取貨付款服務。</p>
+      </div>
+    </div>
+
+    <!-- 展示牆區域 -->
+    <h2 class="gallery-title">📸 選務工作室與商品寫真</h2>
+    <div class="photo-gallery">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop" alt="正版角色壓克力立牌展示">
+        <div class="gallery-caption">正版角色的高透明度壓克力立牌展示</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1563089145-599997674d42?w=600&auto=format&fit=crop" alt="精細手辦模型典藏">
+        <div class="gallery-caption">熱門動漫角色精細手辦與塗裝模型</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1558679908-541bcf1249ff?w=600&auto=format&fit=crop" alt="中國熱門棉花娃娃與周邊">
+        <div class="gallery-caption">中國官方授權熱門棉花娃娃與周邊</div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 4. 頁尾與版權聲明 -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>JJNumber選物店</h4>
+        <p>提供日本動漫相關周邊好物嚴選代購及銷售，以及少量中國周邊代購。</p>
+      </div>
+      <div class="footer-section">
+        <h4>服務項目</h4>
+        <p>• 日本動漫周邊代購 / 現貨<br>• 中國動漫周邊精選代購<br>• 7-11 賣貨便取貨付款</p>
+      </div>
+      <div class="footer-section">
+        <h4>快速連結</h4>
+        <p><a href="product.html">前往選購商品</a> | <a href="contact.html">聯絡我們</a></p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>JJNumber選物店 版權所有 © 2026 All Rights Reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

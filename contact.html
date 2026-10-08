@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JJNumber選物店 | 聯絡資訊與客服</title>
+  <style>
+    :root {
+      --primary-color: #e63946;
+      --secondary-color: #ffb703;
+      --dark-color: #1d3557;
+      --light-bg: #f8f9fa;
+      --white: #ffffff;
+      --gray: #6c757d;
+      --border-color: #e0e0e0;
+      --box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Helvetica Neue', Helvetica, Arial, 'PingFang TC', 'Microsoft JhengHei', sans-serif; }
+    body { background-color: var(--light-bg); color: #333; line-height: 1.7; display: flex; flex-direction: column; min-height: 100vh; }
+
+    header { background-color: var(--white); box-shadow: var(--box-shadow); position: sticky; top: 0; z-index: 1000; }
+    .nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; }
+    .logo { font-size: 1.8rem; font-weight: bold; color: var(--primary-color); text-decoration: none; }
+    .nav-menu { display: flex; list-style: none; gap: 1.5rem; }
+    .nav-menu a { text-decoration: none; color: var(--dark-color); font-weight: 600; padding: 0.5rem 0.8rem; border-radius: 4px; }
+    .nav-menu a:hover, .nav-menu a.active { color: var(--primary-color); background-color: rgba(230, 57, 70, 0.08); }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 3rem 2rem; width: 100%; }
+
+    .contact-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; margin-bottom: 3rem; }
+    
+    .contact-info-card { background: var(--white); padding: 2rem; border-radius: 12px; box-shadow: var(--box-shadow); }
+    .contact-info-card h2 { color: var(--dark-color); margin-bottom: 1.5rem; font-size: 1.6rem; border-bottom: 2px solid var(--primary-color); padding-bottom: 0.5rem; }
+    
+    .info-item { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.2rem; }
+    .info-icon { font-size: 1.4rem; color: var(--primary-color); }
+    .info-text strong { display: block; color: var(--dark-color); }
+
+    .contact-form { background: var(--white); padding: 2rem; border-radius: 12px; box-shadow: var(--box-shadow); }
+    .contact-form h2 { color: var(--dark-color); margin-bottom: 1.5rem; font-size: 1.6rem; border-bottom: 2px solid var(--primary-color); padding-bottom: 0.5rem; }
+    
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; font-weight: bold; margin-bottom: 0.3rem; color: var(--dark-color); }
+    .form-group input, .form-group textarea { width: 100%; padding: 0.7rem; border: 1px solid var(--border-color); border-radius: 6px; outline: none; }
+    .btn-send { background: var(--primary-color); color: white; border: none; padding: 0.8rem 1.8rem; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1rem; width: 100%; transition: background 0.3s; }
+    .btn-send:hover { background: #c1272d; }
+
+    /* 地圖區域 */
+    .map-container { background: var(--white); padding: 1.5rem; border-radius: 12px; box-shadow: var(--box-shadow); }
+    .map-container h3 { color: var(--dark-color); margin-bottom: 1rem; }
+    .map-iframe { width: 100%; height: 350px; border: 0; border-radius: 8px; }
+
+    footer { background-color: var(--dark-color); color: #bbb; margin-top: auto; padding: 2rem 0 1rem 0; text-align: center; font-size: 0.85rem; }
+
+    @media (max-width: 768px) {
+      .nav-container { flex-direction: column; gap: 1rem; }
+      .contact-wrapper { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 導覽列 -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo">🎁 JJNumber選物店</a>
+      <ul class="nav-menu">
+        <li><a href="index.html">首頁</a></li>
+        <li><a href="story.html">店家故事</a></li>
+        <li><a href="product.html">商品頁面</a></li>
+        <li><a href="about.html">AI 生活風格誌</a></li>
+        <li><a href="contact.html" class="active">聯絡資訊</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="contact-wrapper">
+      
+      <!-- 門市與聯絡資料 -->
+      <div class="contact-info-card">
+        <h2>📍 店家資訊與聯絡方式</h2>
+        <div class="info-item">
+          <div class="info-icon">🏪</div>
+          <div class="info-text">
+            <strong>選物店名稱</strong>
+            JJNumber選物店
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">🛍️</div>
+          <div class="info-text">
+            <strong>經營項目</strong>
+            日本動漫周邊好物嚴選代購、少量中國熱門周邊代購
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📦</div>
+          <div class="info-text">
+            <strong>配送方式</strong>
+            7-11 賣貨便取貨付款、郵寄包裝
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">📧</div>
+          <div class="info-text">
+            <strong>客服信箱</strong>
+            service@jjnumber-select.com
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">⏰</div>
+          <div class="info-text">
+            <strong>客服服務時間</strong>
+            週一至週五 10:00 - 19:00（國定假日除外）
+          </div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon">🌐</div>
+          <div class="info-text">
+            <strong>社群平台</strong>
+            Instagram: @jjnumber_select | Facebook: JJNumber選物店
+          </div>
+        </div>
+      </div>
+
+      <!-- 線上諮詢表單 -->
+      <div class="contact-form">
+        <h2>✉️ 線上諮詢 / 訂單問題詢問</h2>
+        <form onsubmit="handleFormSubmit(event)">
+          <div class="form-group">
+            <label>您的姓名 *</label>
+            <input type="text" required placeholder="請輸入姓名">
+          </div>
+          <div class="form-group">
+            <label>電子信箱 *</label>
+            <input type="email" required placeholder="example@email.com">
+          </div>
+          <div class="form-group">
+            <label>詢問類別</label>
+            <input type="text" placeholder="例如: 訂單進度查詢 / 日本代購許願">
+          </div>
+          <div class="form-group">
+            <label>訊息內容 *</label>
+            <textarea rows="4" required placeholder="請輸入您的問題，客服人員將儘速為您回覆！"></textarea>
+          </div>
+          <button type="submit" class="btn-send">送出訊息</button>
+        </form>
+      </div>
+
+    </div>
+
+    <!-- 地圖嵌入 -->
+    <div class="map-container">
+      <h3>🗺️ 客服諮詢點 / 展演地圖</h3>
+      <iframe class="map-iframe" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14457.733671239108!2d121.481005!3d25.062125!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a8f8a3794689%3A0x2a17725a33c16827!2zMjQxOTkgOCHOpXBhbGvljJfmsI_luILkuInph43ljLo!5e0!3m2!1szh-TW!2stw!4v1700000000000!5m2!1szh-TW!2stw" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+  </main>
+
+  <!-- 頁尾與版權聲明 -->
+  <footer>
+    <p>JJNumber選物店 版權所有 © 2026 All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      alert('感謝您的留言！客服人員將於 24 小時內與您聯繫。');
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>
